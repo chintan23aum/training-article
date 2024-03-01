@@ -18,11 +18,11 @@ use Symfony\Component\Security\Http\Authenticator\Passport\Credentials\PasswordC
 use Symfony\Component\Security\Http\Authenticator\Passport\Passport;
 use Symfony\Component\Security\Http\Util\TargetPathTrait;
 
-class AppAuthenticator extends AbstractLoginFormAuthenticator
+class AppAdminAuthenticator extends AbstractLoginFormAuthenticator
 {
     use TargetPathTrait;
 
-    public const LOGIN_ROUTE = 'app_login';
+    public const LOGIN_ROUTE = 'app_admin_login';
     private $userRepository;
 
     public function __construct(private UrlGeneratorInterface $urlGenerator, UserRepository $userRepository)
@@ -36,9 +36,10 @@ class AppAuthenticator extends AbstractLoginFormAuthenticator
 
         $user = $this->userRepository->findOneByEmail($email);
 
-        if (!$user || !in_array('ROLE_USER', $user->getRoles(), true)) {
+        if (!$user || !in_array('ROLE_ADMIN', $user->getRoles(), true)) {
             throw new CustomUserMessageAuthenticationException('You are not authorized to access this area.');
         }
+
 
         $request->getSession()->set(Security::LAST_USERNAME, $email);
 
@@ -59,7 +60,7 @@ class AppAuthenticator extends AbstractLoginFormAuthenticator
         }
 
         // For example:
-         return new RedirectResponse($this->urlGenerator->generate('app_home'));
+         return new RedirectResponse($this->urlGenerator->generate('app_admin_dashboard'));
         //throw new \Exception('TODO: provide a valid redirect inside '.__FILE__);
     }
 
