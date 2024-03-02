@@ -21,6 +21,7 @@ security:
             custom_authenticator: App\Security\AppAdminAuthenticator
             logout:
                 path: app_admin_logout
+                target: app_admin_login
                 # where to redirect after logout
                 # target: app_any_route
         main:
