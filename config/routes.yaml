@@ -1,3 +1,86 @@
 controllers:
     resource: ../src/Controller/
     type: attribute
+
+app_home:
+    path: '/'
+    controller: App\Controller\HomeController::index
+
+app_login:
+    path: '/login'
+    controller: App\Controller\SecurityController::login
+
+app_logout:
+    path: '/logout'
+    controller: App\Controller\SecurityController::logout
+
+app_register:
+    path: '/register'
+    controller: App\Controller\RegistrationController::register
+
+app_verify_email:
+    path: '/verify/email'
+    controller: App\Controller\RegistrationController::verifyUserEmail
+    
+app_forgot_password_request:
+    path: '/reset-password'
+    controller: App\Controller\ResetPasswordController::request
+
+app_check_email:
+    path: '/reset-password/check-email'
+    controller: App\Controller\ResetPasswordController::checkEmail
+
+app_reset_password:
+    path: '/reset-password/reset/{token}'
+    controller: App\Controller\ResetPasswordController::reset
+
+#Admin
+
+app_admin_dashboard:
+    path: '/admin'
+    controller: App\Controller\AdminController::index
+
+#Category
+app_category_index:
+    path:       /admin/category
+    controller: App\Controller\CategoryController::index
+    methods:    GET
+
+app_category_new:
+    path:       /admin/category/new
+    controller: App\Controller\CategoryController::new
+    methods:    GET|POST
+
+app_category_show:
+    path:       /admin/category/{id}
+    controller: App\Controller\CategoryController::show
+    methods:    GET
+
+app_category_edit:
+    path:       /admin/category/{id}/edit
+    controller: App\Controller\CategoryController::edit
+    methods:    GET|POST
+
+app_category_delete:
+    path:       /admin/category/{id}
+    controller: App\Controller\CategoryController::delete
+    methods:    POST
+
+#Article 
+app_article_list:
+    path:       /admin/article
+    controller: App\Controller\ArticleController::list
+    methods:    GET
+
+#article: 
+#    prefix: '/article'
+#    controller: App\Controller\ArticleController\  
+
+#    app_article:
+#        path: '/article'
+#        controller: ArticleController::index
+    
+    # Define user-specific routes here
+#    admin_crud:
+#        path: '/admin/article'
+#        controller: ArticleController::list

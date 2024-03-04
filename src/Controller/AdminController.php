@@ -6,15 +6,14 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-class HomeController extends AbstractController
+class AdminController extends AbstractController
 { 
     /**
      * Home page 
      */
     public function index(): Response
-    {
-        return $this->render('home/index.html.twig', [
-            'controller_name' => 'HomeController',
-        ]);
+    { 
+        $this->denyAccessUnlessGranted("IS_AUTHENTICATED_FULLY");
+        return $this->render('admin/index.html.twig');
     }
 }
