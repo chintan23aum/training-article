@@ -1,0 +1,36 @@
+<div class="row justify-content-center">
+    <div class="col-md-4 col-md-offset-4">
+        <form method="post">
+            {{ form_start(form) }}
+
+            <div class="form-group">
+                {{ form_row(form.category,{'attr': {'class': 'form-control'}}) }}
+            </div>
+            <div class="form-group">
+                {{ form_row(form.title, {'attr': {'class': 'form-control'}}) }}
+            </div>
+            <div class="form-group">
+                {{ form_row(form.description, {'attr': {'class': 'form-control'}}) }}
+            </div>
+            <div class="form-group">
+                 {{ form_row(form.tags, {'attr': {'class': 'form-control'}}) }}
+            </div>
+            <div class="form-group">
+                {{ form_row(form.updatedAt) }}
+            </div>
+            <div class="form-group">
+                {{ form_row(form.createdAt) }}
+            </div>
+            <button type="submit" class="btn btn-outline-primary">Submit</button>
+            <script>
+                ClassicEditor
+                    .create(document.querySelector('.ckeditor'))
+                    .catch(error => {
+                        console.error(error);
+                    });
+            </script>
+            {{ form_end(form) }}
+        </form>
+    </div>
+</div>
+

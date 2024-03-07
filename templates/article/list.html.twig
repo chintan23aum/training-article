@@ -4,8 +4,8 @@
 
 {% block body %} 
     <h1>Article</h1>
-
-    <table class="table">
+    <a href="{{ path('app_article_new') }}" class="btn btn-outline-primary">Create new</a>
+    <table class="table mt-4">
         <thead>
             <tr>
                 <th>Id</th>
@@ -22,11 +22,18 @@
             <tr>
                 <td>{{ article.id }}</td>
                 <td>{{ article.title }}</td>
-                <td>{{ article.description }}</td>
+                <td>{{ article.description|html_entity_decode|substr }}</td>
                 <td>{{ article.tags }}</td>
                 <td>{{ article.updatedAt ? article.updatedAt|date('Y-m-d H:i:s') : '' }}</td>
                 <td>{{ article.createdAt ? article.createdAt|date('Y-m-d H:i:s') : '' }}</td>
-                <td></td>
+                <td>
+                    <form method="post" action="{{ path('app_article_delete', {'id': article.id}) }}" onsubmit="return confirm('Are you sure you want to delete this Article?');">
+                        <a href="{{ path('app_article_edit',{'id':article.id}) }}">edit</a>
+
+                        <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ article.id) }}">
+                        <button class="btn btn-outline-danger">Delete</button>
+                    </form>
+                </td>
             </tr>
         {% else %}
             <tr>
@@ -36,5 +43,5 @@
         </tbody>
     </table>
 
-    <a href="{{ path('app_category_new') }}">Create new</a>
-{% endblock %} 
+
+{% endblock %}

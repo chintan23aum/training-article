@@ -72,6 +72,21 @@ app_article_list:
     controller: App\Controller\ArticleController::list
     methods:    GET
 
+app_article_new:
+    path:       /admin/article/new
+    controller: App\Controller\ArticleController::new
+    methods:    GET|POST
+
+app_article_edit:
+    path:       /admin/article/{id}/edit
+    controller: App\Controller\ArticleController::edit
+    methods:    GET|POST
+
+app_article_delete:
+    path: /admin/article/{id}
+    controller: App\Controller\ArticleController::delete
+    methods: POST
+
 #article: 
 #    prefix: '/article'
 #    controller: App\Controller\ArticleController\  
