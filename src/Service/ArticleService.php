@@ -5,6 +5,7 @@ namespace App\Service;
 use App\Entity\Article;
 use App\Entity\ArticleLog;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\HttpFoundation\Request;
 
 class ArticleService
 {
@@ -35,5 +36,6 @@ class ArticleService
         $totalrow= $this->entityManager->getRepository(ArticleLog::class)->findBy(['article' => $id, 'user'=>$user]);
         return count($totalrow);
     }
+
 
 }

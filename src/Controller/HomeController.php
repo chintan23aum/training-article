@@ -4,10 +4,12 @@ namespace App\Controller;
 
 use App\Entity\Article;
 use App\Entity\Category;
+use App\Repository\ArticleRepository;
 use App\Service\ArticleService;
 use App\Service\CategoryService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -45,6 +47,21 @@ class HomeController extends AbstractController
             'articles' => $articles,
             'category_id' => $category_id->getId(),
         ]);
+    }
+
+    public function topsearch(Request $request, ArticleRepository $articleRepository): Response
+    {
+        $articles = $articleRepository->findBySearchTerm($request->request->get('searchVal'));
+        //dd($articles);
+        //$articles = $this->articleService->getArticleByCategory(1);
+
+        $data = ['message' => 'AJAX request received!',
+            'data' => $request->request->get('searchVal'),
+            'html'=> $this->renderView('home/_serach_res.html.twig', [
+                'articles'=>$articles
+            ])
+        ];
+        return $this->json($data);
     }
 
 }

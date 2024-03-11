@@ -4,9 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Article;
 use App\Entity\ArticleLog;
-use App\Entity\Category;
 use App\Form\ArticleType;
-use App\Form\CategoryType;
 use App\Service\ArticleService;
 use App\Service\CategoryService;
 use DateTimeImmutable;
@@ -14,7 +12,6 @@ use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route;
 use App\Repository\ArticleRepository;
 
 class ArticleController extends AbstractController
@@ -116,5 +113,6 @@ class ArticleController extends AbstractController
 
         return $this->redirectToRoute('app_article_display',['id'=>$article->getId()]);
     }
+
 
 }

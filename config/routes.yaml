@@ -102,6 +102,11 @@ app_article_like:
     controller: App\Controller\ArticleController::likearticle
     methods: GET|POST
 
+app_top_search:
+    path: /topsearch
+    controller: App\Controller\HomeController::topsearch
+    methods: POST
+
 #article: 
 #    prefix: '/article'
 #    controller: App\Controller\ArticleController\  
