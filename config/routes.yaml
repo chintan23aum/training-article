@@ -87,6 +87,21 @@ app_article_delete:
     controller: App\Controller\ArticleController::delete
     methods: POST
 
+app_home_articlelist:
+    path: /articlelist/{id}
+    controller: App\Controller\HomeController::showarticlelist
+    methods: GET
+
+app_article_display:
+    path: /article/{id}
+    controller: App\Controller\ArticleController::display
+    methods: GET
+
+app_article_like:
+    path: /article/like/{id}
+    controller: App\Controller\ArticleController::likearticle
+    methods: GET|POST
+
 #article: 
 #    prefix: '/article'
 #    controller: App\Controller\ArticleController\  

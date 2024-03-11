@@ -8,13 +8,29 @@
     .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
 </style>
 
-<div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
+<div >
+    <h1>Welcome</h1>
+     <div class="example-wrapper">
+         <ul class="nav nav-pills">
+             <li class="nav-item">
+                 {% set isActive = 0 == category_id %}
+                 <a class="nav-link {{ isActive ? ' active' }}" aria-current="page" href="{{ path('app_home') }}">All</a>
+             </li>
+             {% for category in categories %}
+             {% set isActive = category.id == category_id %}
+             <li class="nav-item">
+                 <a class="nav-link {{ isActive ? ' active' }}" href="{{ path('app_home_articlelist',{'id': category.id}) }}">{{ category }}</a>
+             </li>
+             {% endfor %}
+         </ul>
+         <div class="mt-4">
+             {% for article in articles %}
+                 <h5>{{ article.title }}</h5>
+                 <p>{{ article.description|raw }}.. <a href="{{ path('app_article_display',{'id': article.id}) }}">Read More</a></p>
+                 <hr>
+             {% endfor %}
 
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code><a href="{{ '/home/aum/web/projects/training_article/src/Controller/HomeController.php'|file_link(0) }}">src/Controller/HomeController.php</a></code></li>
-        <li>Your template at <code><a href="{{ '/home/aum/web/projects/training_article/templates/home/index.html.twig'|file_link(0) }}">templates/home/index.html.twig</a></code></li>
-    </ul>
+         </div>
+     </div>
 </div>
 {% endblock %}

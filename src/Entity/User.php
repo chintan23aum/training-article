@@ -37,9 +37,13 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(targetEntity: Article::class, mappedBy: 'user')]
     private Collection $articles;
 
+    #[ORM\OneToMany(targetEntity: ArticleLog::class, mappedBy: 'user')]
+    private Collection $articleLogs;
+
     public function __construct()
     {
         $this->articles = new ArrayCollection();
+        $this->articleLogs = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -158,4 +162,36 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         return $this->getEmail(); // Assuming there's a "name" property in your Category entity
     }
+
+    /**
+     * @return Collection<int, ArticleLog>
+     */
+    public function getArticleLogs(): Collection
+    {
+        return $this->articleLogs;
+    }
+
+    public function addArticleLog(ArticleLog $articleLog): static
+    {
+        if (!$this->articleLogs->contains($articleLog)) {
+            $this->articleLogs->add($articleLog);
+            $articleLog->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeArticleLog(ArticleLog $articleLog): static
+    {
+        if ($this->articleLogs->removeElement($articleLog)) {
+            // set the owning side to null (unless already changed)
+            if ($articleLog->getUser() === $this) {
+                $articleLog->setUser(null);
+            }
+        }
+
+        return $this;
+    }
+
+
 }

@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\ArticleRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -34,6 +36,17 @@ class Article
 
     #[ORM\Column]
     private ?\DateTimeImmutable $createdAt = null;
+
+    #[ORM\Column]
+    private ?int $likecount = null;
+
+    #[ORM\OneToMany(targetEntity: ArticleLog::class, mappedBy: 'article')]
+    private Collection $articleLogs;
+
+    public function __construct()
+    {
+        $this->articleLogs = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -123,4 +136,47 @@ class Article
 
         return $this;
     }
+
+    public function getLikecount(): ?int
+    {
+        return $this->likecount;
+    }
+
+    public function setLikecount(int $likecount): static
+    {
+        $this->likecount = $likecount;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, ArticleLog>
+     */
+    public function getArticleLogs(): Collection
+    {
+        return $this->articleLogs;
+    }
+
+    public function addArticleLog(ArticleLog $articleLog): static
+    {
+        if (!$this->articleLogs->contains($articleLog)) {
+            $this->articleLogs->add($articleLog);
+            $articleLog->setArticle($this);
+        }
+
+        return $this;
+    }
+
+    public function removeArticleLog(ArticleLog $articleLog): static
+    {
+        if ($this->articleLogs->removeElement($articleLog)) {
+            // set the owning side to null (unless already changed)
+            if ($articleLog->getArticle() === $this) {
+                $articleLog->setArticle(null);
+            }
+        }
+
+        return $this;
+    }
+
 }
