@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Article;
 use App\Entity\ArticleLog;
 use App\Form\ArticleType;
+use App\Repository\ArticleLogRepository;
 use App\Service\ArticleService;
 use App\Service\CategoryService;
 use DateTimeImmutable;
@@ -38,7 +39,18 @@ class ArticleController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $formData = $form->getData();
+
             $article->setUser($this->getUser());
+            $article->setCategory($formData->getCategory());
+            $article->setTitle($formData->getTitle());
+            $article->setDescription($formData->getDescription());
+            $article->setTags($formData->getTags());
+
+            $createdAt = new DateTimeImmutable();
+            $article->setCreatedAt($createdAt);
+            $article->setUpdatedAt($createdAt);
+
             $entityManager->persist($article);
             $entityManager->flush();
 
@@ -57,7 +69,16 @@ class ArticleController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $formData = $form->getData();
+
             $article->setUser($this->getUser());
+            $article->setCategory($formData->getCategory());
+            $article->setTitle($formData->getTitle());
+            $article->setDescription($formData->getDescription());
+            $article->setTags($formData->getTags());
+
+            $createdAt = new DateTimeImmutable();
+            $article->setUpdatedAt($createdAt);
             $entityManager->flush();
 
             return $this->redirectToRoute('app_article_list');
@@ -81,7 +102,7 @@ class ArticleController extends AbstractController
 
     public function display(Article $article,CategoryService $categoryService, ArticleService $articleService)
     {
-        $likecount = $articleService->getArticleLikes($article->getId(),$this->getUser()->getId());
+        $likecount = $articleService->getArticleLikes($article->getId());
 
         return $this->renderForm('article/display.html.twig', [
             'categories' => $categoryService->getAllCategory(),
@@ -91,11 +112,13 @@ class ArticleController extends AbstractController
         ]);
     }
 
-    public function likearticle(Article $article,ArticleService $articleService,EntityManagerInterface $entityManager)
+    public function likearticle(Article $article,ArticleService $articleService, ArticleLogRepository $articleLogRepository,EntityManagerInterface $entityManager)
     {
-        $totallike = $articleService->getArticleLikes($article->getId(),$this->getUser()->getId());
 
-        if($totallike <= 0){
+        $totalLike = $articleLogRepository->findOneByUser($article,$this->getUser());
+
+
+        if($totalLike[1] <= 0){
             //insert new record
             $totallike=1;
 

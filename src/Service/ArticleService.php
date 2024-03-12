@@ -31,9 +31,9 @@ class ArticleService
         return $this->entityManager->getRepository(Article::class)->findBy(['id' => $id]);
     }
 
-    public function getArticleLikes(int $id, int $user)
+    public function getArticleLikes(int $id)
     {
-        $totalrow= $this->entityManager->getRepository(ArticleLog::class)->findBy(['article' => $id, 'user'=>$user]);
+        $totalrow= $this->entityManager->getRepository(ArticleLog::class)->findBy(['article' => $id]);
         return count($totalrow);
     }
 

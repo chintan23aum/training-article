@@ -17,8 +17,6 @@ class ArticleType extends AbstractType
             ->add('description', TextareaType::class)
             ->add('tags')
             ->add('category')
-            ->add('updatedAt')
-            ->add('createdAt')
         ;
     }
 

@@ -10,17 +10,12 @@
                 {{ form_row(form.title, {'attr': {'class': 'form-control'}}) }}
             </div>
             <div class="form-group">
-                {{ form_row(form.description, {'attr': {'class': 'form-control'}}) }}
+                {{ form_row(form.description, {'attr': {'class': 'form-control ckeditor'}}) }}
             </div>
             <div class="form-group">
                  {{ form_row(form.tags, {'attr': {'class': 'form-control'}}) }}
             </div>
-            <div class="form-group">
-                {{ form_row(form.updatedAt) }}
-            </div>
-            <div class="form-group">
-                {{ form_row(form.createdAt) }}
-            </div>
+
             <button type="submit" class="btn btn-outline-primary">Submit</button>
             <script>
                 ClassicEditor
@@ -28,6 +23,7 @@
                     .catch(error => {
                         console.error(error);
                     });
+
             </script>
             {{ form_end(form) }}
         </form>

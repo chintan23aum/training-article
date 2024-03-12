@@ -5,7 +5,8 @@
 {% block body %}
     <h1>Category index</h1>
 
-    <table class="table">
+    <a href="{{ path('app_category_new') }}" class="btn btn-outline-primary">Create new</a>
+    <table class="table mt-4">
         <thead>
             <tr>
                 <th>Id</th>
@@ -39,6 +40,4 @@
         {% endfor %}
         </tbody>
     </table>
-
-    <a href="{{ path('app_category_new') }}">Create new</a>
 {% endblock %}

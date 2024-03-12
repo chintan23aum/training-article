@@ -36,13 +36,16 @@ class ArticleLogRepository extends ServiceEntityRepository
 //        ;
 //    }
 
-//    public function findOneBySomeField($value): ?ArticleLog
-//    {
-//        return $this->createQueryBuilder('a')
-//            ->andWhere('a.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->getQuery()
-//            ->getOneOrNullResult()
-//        ;
-//    }
+    public function findOneByUser($article_id,$user_id): array
+    {
+        return $this->createQueryBuilder('a')
+            ->select('COUNT(a)')
+            ->andWhere('a.article = :article_id')
+            ->andWhere('a.user = :user_id')
+            ->setParameter('article_id', $article_id)
+            ->setParameter('user_id', $user_id)
+            ->getQuery()
+            ->getOneOrNullResult()
+        ;
+    }
 }

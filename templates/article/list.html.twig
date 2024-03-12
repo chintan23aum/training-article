@@ -22,7 +22,7 @@
             <tr>
                 <td>{{ article.id }}</td>
                 <td>{{ article.title }}</td>
-                <td>{{ article.description|html_entity_decode|substr }}</td>
+                <td>{{ article.description|html_entity_decode|substr|raw }}</td>
                 <td>{{ article.tags }}</td>
                 <td>{{ article.updatedAt ? article.updatedAt|date('Y-m-d H:i:s') : '' }}</td>
                 <td>{{ article.createdAt ? article.createdAt|date('Y-m-d H:i:s') : '' }}</td>
