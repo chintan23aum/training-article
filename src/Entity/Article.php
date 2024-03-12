@@ -37,9 +37,6 @@ class Article
     #[ORM\Column]
     private ?\DateTimeImmutable $createdAt = null;
 
-    #[ORM\Column]
-    private ?int $likecount = null;
-
     #[ORM\OneToMany(targetEntity: ArticleLog::class, mappedBy: 'article')]
     private Collection $articleLogs;
 
@@ -137,17 +134,6 @@ class Article
         return $this;
     }
 
-    public function getLikecount(): ?int
-    {
-        return $this->likecount;
-    }
-
-    public function setLikecount(int $likecount): static
-    {
-        $this->likecount = $likecount;
-
-        return $this;
-    }
 
     /**
      * @return Collection<int, ArticleLog>
