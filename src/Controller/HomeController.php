@@ -37,7 +37,7 @@ class HomeController extends AbstractController
         ]);
     }
 
-    public function showarticlelist(?Category $category_id = null): Response
+    public function showarticlelist(Category $category_id = null): Response
     {
         $articles = $this->articleService->getArticleByCategory($category_id->getId());
 
@@ -51,8 +51,6 @@ class HomeController extends AbstractController
     public function topsearch(Request $request, ArticleRepository $articleRepository): Response
     {
         $articles = $articleRepository->findBySearchTerm($request->request->get('searchVal'));
-        //dd($articles);
-        //$articles = $this->articleService->getArticleByCategory(1);
 
         $data = ['message' => 'AJAX request received!',
             'data' => $request->request->get('searchVal'),
@@ -62,5 +60,6 @@ class HomeController extends AbstractController
         ];
         return $this->json($data);
     }
+
 
 }

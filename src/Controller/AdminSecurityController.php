@@ -9,7 +9,7 @@ use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 
 class AdminSecurityController extends AbstractController
 {
-    #[Route(path: '/admin/login', name: 'app_admin_login')]
+
     public function login(AuthenticationUtils $authenticationUtils): Response
     {
         if ($this->getUser()) {
@@ -24,7 +24,6 @@ class AdminSecurityController extends AbstractController
         return $this->render('admin/login.html.twig', ['last_username' => $lastUsername, 'error' => $error]);
     }
 
-    #[Route(path: '/admin/logout', name: 'app_admin_logout')]
     public function logout(): void
     {
         throw new \LogicException('This method can be blank - it will be intercepted by the logout key on your firewall.');

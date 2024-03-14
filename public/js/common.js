@@ -1,7 +1,7 @@
 $(document).ready(function() {
     $("#top_search_button").on('click', function (e) {
         e.preventDefault();
-        var value = $(this).val();
+        var value = $('#top_search').val();
 
         $.ajax({
             url: ajaxUrl,
@@ -9,7 +9,8 @@ $(document).ready(function() {
             data: {'searchVal': value},
             success: function (response) {
                 // Handle the response
-                $("#mainbody").html(response.html);
+                console.log(response.html);
+                $("#articleDisplay").html(response.html);
             },
             error: function (xhr, status, error) {
                 console.error(xhr.responseText);

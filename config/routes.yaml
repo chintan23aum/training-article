@@ -34,7 +34,19 @@ app_reset_password:
     path: '/reset-password/reset/{token}'
     controller: App\Controller\ResetPasswordController::reset
 
+app_reset_password_new:
+    path: '/reset-password/reset'
+    controller: App\Controller\ResetPasswordController::reset
+
 #Admin
+
+app_admin_login:
+    path: '/admin/login'
+    controller: App\Controller\AdminSecurityController::login
+
+app_admin_logout:
+    path: '/admin/logout'
+    controller: App\Controller\AdminSecurityController::logout
 
 app_admin_dashboard:
     path: '/admin'

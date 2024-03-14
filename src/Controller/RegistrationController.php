@@ -32,7 +32,7 @@ class RegistrationController extends AbstractController
     {
         if ($this->getUser()) {
             $loginuser =$this->getUser();
-            return $this->redirectToRoute('app_admin');
+            return $this->redirectToRoute('app_home');
         }
 
         $user = new User();

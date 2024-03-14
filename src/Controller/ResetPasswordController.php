@@ -73,15 +73,16 @@ class ResetPasswordController extends AbstractController
     /**
      * Validates and process the reset URL that the user clicked in their email.
      */
-    
+
     public function reset(Request $request, UserPasswordHasherInterface $passwordHasher, TranslatorInterface $translator, string $token = null): Response
     {
+
         if ($token) {
             // We store the token in session and remove it from the URL, to avoid the URL being
             // loaded in a browser and potentially leaking the token to 3rd party JavaScript.
             $this->storeTokenInSession($token);
 
-            return $this->redirectToRoute('app_reset_password');
+            return $this->redirectToRoute('app_reset_password_new');
         }
 
         $token = $this->getTokenFromSession();
@@ -130,7 +131,7 @@ class ResetPasswordController extends AbstractController
         ]);
     }
 
-    private function processSendingPasswordResetEmail(string $emailFormData, MailerInterface $mailer, TranslatorInterface $translator): RedirectResponse
+    private function processSendingPasswordResetEmail(string $emailFormData, MailerInterface $mailer, TranslatorInterface $translator): Response
     {
         $user = $this->entityManager->getRepository(User::class)->findOneBy([
             'email' => $emailFormData,
@@ -157,7 +158,7 @@ class ResetPasswordController extends AbstractController
             return $this->redirectToRoute('app_check_email');
         }
 
-        $email = (new TemplatedEmail())
+        /*$email = (new TemplatedEmail())
             ->from(new Address('mailer@domain.de', 'Maler'))
             ->to($user->getEmail())
             ->subject('Your password reset request')
@@ -167,11 +168,20 @@ class ResetPasswordController extends AbstractController
             ])
         ;
 
-        $mailer->send($email);
+        $mailer->send($email);*/
 
         // Store the token object in session for retrieval in check-email route.
+
+
+        //return $this->redirectToRoute('app_check_email');
+        $tmp= $this->renderView('reset_password/email.html.twig', [
+            'resetToken' => $resetToken
+        ]);
+
         $this->setTokenObjectInSession($resetToken);
 
-        return $this->redirectToRoute('app_check_email');
+        return new Response($tmp);
+
+
     }
 }
