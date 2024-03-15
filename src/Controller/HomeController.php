@@ -30,7 +30,7 @@ class HomeController extends AbstractController
      */
     public function index(): Response
     {
-        return $this->render('home/index.html.twig', [
+        return $this->render('article/index.html.twig', [
             'categories' => $this->categoryService->getAllCategory(),
             'articles' => $this->articleService->getAllArticle(),
             'category_id' =>0,
@@ -41,7 +41,7 @@ class HomeController extends AbstractController
     {
         $articles = $this->articleService->getArticleByCategory($category_id->getId());
 
-        return $this->render('home/index.html.twig', [
+        return $this->render('article/index.html.twig', [
             'categories' => $this->categoryService->getAllCategory(),
             'articles' => $articles,
             'category_id' => $category_id->getId(),
@@ -54,7 +54,7 @@ class HomeController extends AbstractController
 
         $data = ['message' => 'AJAX request received!',
             'data' => $request->request->get('searchVal'),
-            'html'=> $this->renderView('home/_serach_res.html.twig', [
+            'html'=> $this->renderView('article/_serach_res.html.twig', [
                 'articles'=>$articles
             ])
         ];

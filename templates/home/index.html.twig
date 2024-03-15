@@ -10,34 +10,6 @@
 
 <div >
     <h1>Welcome</h1>
-     <div class="example-wrapper">
-         <form class="form-inline">
-             <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" id="top_search">
-             <button class="btn btn-outline-success my-2 my-sm-0" type="button" id="top_search_button">Search</button>
-         </form>
-         <div class="my-5"  id="articleDisplay" >
-             <ul class="nav nav-pills">
-                 <li class="nav-item">
-                     {% set isActive = 0 == category_id %}
-                     <a class="nav-link {{ isActive ? ' active' }}" aria-current="page" href="{{ path('app_home') }}">All</a>
-                 </li>
-                 {% for category in categories %}
-                 {% set isActive = category.id == category_id %}
-                 <li class="nav-item">
-                     <a class="nav-link {{ isActive ? ' active' }}" href="{{ path('app_home_articlelist',{'id': category.id}) }}">{{ category }}</a>
-                 </li>
-                 {% endfor %}
-             </ul>
-             <div class="mt-4">
-                 {% for article in articles %}
-                     <h5>{{ article.title }}</h5>
-                     <p><small>{{ article.tags }}</small></p>
-                     <p>{{ article.description|raw }}.. <a href="{{ path('app_article_display',{'id': article.id}) }}">Read More</a></p>
-                     <hr>
-                 {% endfor %}
 
-             </div>
-         </div>
-     </div>
 </div>
 {% endblock %}

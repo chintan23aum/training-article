@@ -27,11 +27,9 @@ class RegistrationController extends AbstractController
         $this->emailVerifier = $emailVerifier;
     }
 
-    
     public function register(Request $request, UserPasswordHasherInterface $userPasswordHasher, UserAuthenticatorInterface $userAuthenticator, AppAuthenticator $authenticator, EntityManagerInterface $entityManager): Response
     {
         if ($this->getUser()) {
-            $loginuser =$this->getUser();
             return $this->redirectToRoute('app_home');
         }
 
@@ -52,20 +50,41 @@ class RegistrationController extends AbstractController
             $entityManager->flush();
 
             // generate a signed url and email it to the user
-            $this->emailVerifier->sendEmailConfirmation('app_verify_email', $user,
+          /*  $this->emailVerifier->sendEmailConfirmation('app_verify_email', $user,
+                (new TemplatedEmail())
+                    ->from(new Address('mailer@mailer.de', 'Mailer boot'))
+                    ->to($user->getEmail())
+                    ->subject('Please Confirm your Email')
+                    ->htmlTemplate('registration/confirmation_email.html.twig')
+            );*/
+            // do anything else you need here, like send an email
+
+            $emailverifyArr = $this->emailVerifier->sendEmailConfirmationCustom('app_verify_email', $user,
                 (new TemplatedEmail())
                     ->from(new Address('mailer@mailer.de', 'Mailer boot'))
                     ->to($user->getEmail())
                     ->subject('Please Confirm your Email')
                     ->htmlTemplate('registration/confirmation_email.html.twig')
             );
-            // do anything else you need here, like send an email
 
-            return $userAuthenticator->authenticateUser(
+            $userAuthenticator->authenticateUser(
                 $user,
                 $authenticator,
                 $request
             );
+
+            return $this->render('registration/confirmation_email.html.twig',
+            [
+                'signedUrl'=> $emailverifyArr['signedUrl'],
+                'expiresAtMessageKey'=> $emailverifyArr['expiresAtMessageKey'],
+                'expiresAtMessageData'=> $emailverifyArr['expiresAtMessageData']
+            ]);
+
+           /* return $userAuthenticator->authenticateUser(
+                $user,
+                $authenticator,
+                $request
+            );*/
         }
 
         return $this->render('registration/register.html.twig', [
@@ -89,6 +108,6 @@ class RegistrationController extends AbstractController
         // @TODO Change the redirect on success and handle or remove the flash message in your templates
         $this->addFlash('success', 'Your email address has been verified.');
 
-        return $this->redirectToRoute('app_admin');
+        return $this->redirectToRoute('app_home');
     }
 }

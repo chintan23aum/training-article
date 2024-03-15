@@ -8,4 +8,9 @@
     {{ include('article/_form.html.twig', {'button_label': 'Save'}) }}
 
     <a href="{{ path('app_article_list') }}">back to list</a>
+    <script>
+        $(document).ready(function(){
+            $('#article_description').attr('required',false);
+        })
+    </script>
 {% endblock %}

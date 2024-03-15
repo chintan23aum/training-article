@@ -37,6 +37,24 @@ class EmailVerifier
         $this->mailer->send($email);
     }
 
+    /*
+     * Custom email verification message for registration page display**/
+    public function sendEmailConfirmationCustom(string $verifyEmailRouteName, UserInterface $user, TemplatedEmail $email): array
+    {
+        $signatureComponents = $this->verifyEmailHelper->generateSignature(
+            $verifyEmailRouteName,
+            $user->getId(),
+            $user->getEmail()
+        );
+
+        $context = $email->getContext();
+        $context['signedUrl'] = $signatureComponents->getSignedUrl();
+        $context['expiresAtMessageKey'] = $signatureComponents->getExpirationMessageKey();
+        $context['expiresAtMessageData'] = $signatureComponents->getExpirationMessageData();
+
+        return $context;
+    }
+
     /**
      * @throws VerifyEmailExceptionInterface
      */

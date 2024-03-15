@@ -104,12 +104,23 @@ class ArticleController extends AbstractController
     {
         $likecount = $articleService->getArticleLikes($article->getId());
 
-        return $this->renderForm('article/display.html.twig', [
-            'categories' => $categoryService->getAllCategory(),
-            'category_id' => $article->getCategory()->getId(),
-            'article' => $article,
-            'likecount' => $likecount,
-        ]);
+        $user = $this->getUser();
+
+        return match ($user->isVerified()) {
+            false => $this->render("article/verify_email.html.twig", [
+                'categories' => $categoryService->getAllCategory(),
+                'category_id' => $article->getCategory()->getId(),
+                'article' => $article,
+                'likecount' => $likecount,
+            ]),
+            true => $this->render('article/display.html.twig', [
+                'categories' => $categoryService->getAllCategory(),
+                'category_id' => $article->getCategory()->getId(),
+                'article' => $article,
+                'likecount' => $likecount,
+            ]),
+        };
+
     }
 
     public function likearticle(Article $article,ArticleService $articleService, ArticleLogRepository $articleLogRepository,EntityManagerInterface $entityManager)
