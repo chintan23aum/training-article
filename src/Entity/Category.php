@@ -5,6 +5,7 @@ namespace App\Entity;
 use App\Repository\CategoryRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: CategoryRepository::class)]
@@ -26,6 +27,12 @@ class Category
 
     #[ORM\OneToMany(targetEntity: Article::class, mappedBy: 'category')]
     private Collection $articles;
+
+    #[ORM\Column(nullable: true)]
+    private ?array $parent_category = null;
+
+
+
 
     public function __construct()
     {
@@ -107,4 +114,20 @@ class Category
     {
         return $this->getName(); // Assuming there's a "name" property in your Category entity
     }
+
+    public function getParentCategory(): ?array
+    {
+        return $this->parent_category;
+    }
+
+    public function setParentCategory(?array $parent_category): static
+    {
+        $this->parent_category = $parent_category;
+
+        return $this;
+    }
+
+
+
+
 }

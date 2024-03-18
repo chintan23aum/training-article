@@ -78,6 +78,16 @@ app_category_delete:
     controller: App\Controller\CategoryController::delete
     methods:    POST
 
+app_get_sub_category:
+    path: /get-categories/{id}
+    controller: App\Controller\CategoryController::getCategories
+    methods: GET|POST
+
+app_get_all_category:
+    path: /get-all
+    controller: App\Controller\CategoryController::getAllCategoryMenu
+    methods: GET|POST
+
 #Article 
 app_article_list:
     path:       /admin/article

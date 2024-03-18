@@ -5,6 +5,7 @@ namespace App\Repository;
 use App\Entity\Category;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * @extends ServiceEntityRepository<Category>
@@ -20,6 +21,43 @@ class CategoryRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Category::class);
     }
+
+    public function findByCateogryIds($ids): array
+    {
+        return $this->createQueryBuilder('c')
+            ->andWhere('c.id IN (:ids)')
+            ->setParameter('ids', $ids)
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function findByParentCategoryId(int $categoryId): array
+    {
+        // Fetch all entities
+        $entities = $this->findAll();
+
+        // Filter entities based on the category ID
+        $matchingEntities = array_filter($entities, function ($entity) use ($categoryId) {
+            // Check if parentCategory is null
+            if ($entity->getParentCategory() === null) {
+                return false;
+            }
+            // Check if the category ID is in the parentCategory array
+            return in_array($categoryId, $entity->getParentCategory(), true);
+        });
+
+        return $matchingEntities;
+    }
+
+    public function getMainCategory(): array
+    {
+        return $this->createQueryBuilder('c')
+            ->andWhere('c.parent_category IS NULL')
+            ->getQuery()
+            ->getResult();
+    }
+
+
 
 //    /**
 //     * @return Category[] Returns an array of Category objects

@@ -12,6 +12,18 @@
                 <td>{{ category.id }}</td>
             </tr>
             <tr>
+                <th>Parent Ids</th>
+                <td>
+                    {% if parentCategory is empty %}
+                        <p>-</p>
+                    {% else %}
+                        {% for category in parentCategory %}
+                            <small>{{ category.name }}</small><br>
+                        {% endfor %}
+                    {% endif %}
+                </td>
+            </tr>
+            <tr>
                 <th>Name</th>
                 <td>{{ category.name }}</td>
             </tr>

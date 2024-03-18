@@ -14,12 +14,24 @@
             {{ include('article/_search_form.html.twig') }}
             <div class="my-5"  id="articleDisplay" >
                 {{ include('article/_tabs.html.twig') }}
-                <div class="mt-4">
+                <div class="mt-4 col-12 row">
                     {% for article in articles %}
-                        <h5>{{ article.title }}</h5>
-                        <p><small>{{ article.tags }}</small></p>
-                        <p>{{ article.description|raw }}.. <a href="{{ path('app_article_display',{'id': article.id}) }}">Read More</a></p>
-                        <hr>
+{#                        <h5>{{ article.title }}</h5>#}
+{#                        <p><small>{{ article.tags }}</small></p>#}
+{#                        <p>{{ article.description|raw }}.. <a href="{{ path('app_article_display',{'id': article.id}) }}">Read More</a></p>#}
+{#                        <hr>#}
+                        <div class="col-12">
+                            <div class="card">
+
+                                <div class="card-body">
+                                    <h5 class="card-title">{{ article.title }}</h5>
+                                    <p class="card-text"><small>{{ article.tags }}</small>
+                                        {{ article.description|raw }}..
+                                    </p>
+                                    <a href="{{ path('app_article_display',{'id': article.id}) }}" class="btn btn-primary">Read More</a>
+                                </div>
+                            </div>
+                        </div>
                     {% endfor %}
 
                 </div>

@@ -40,6 +40,9 @@ class Article
     #[ORM\OneToMany(targetEntity: ArticleLog::class, mappedBy: 'article')]
     private Collection $articleLogs;
 
+    #[ORM\Column(nullable: true)]
+    private ?array $sub_categories = null;
+
     public function __construct()
     {
         $this->articleLogs = new ArrayCollection();
@@ -161,6 +164,18 @@ class Article
                 $articleLog->setArticle(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getSubCategories(): ?array
+    {
+        return $this->sub_categories;
+    }
+
+    public function setSubCategories(?array $sub_categories): static
+    {
+        $this->sub_categories = $sub_categories;
 
         return $this;
     }

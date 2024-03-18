@@ -6,6 +6,7 @@ use App\Entity\Article;
 use App\Entity\ArticleLog;
 use App\Form\ArticleType;
 use App\Repository\ArticleLogRepository;
+use App\Repository\CategoryRepository;
 use App\Service\ArticleService;
 use App\Service\CategoryService;
 use DateTimeImmutable;
@@ -40,8 +41,11 @@ class ArticleController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $formData = $form->getData();
+            //$subcategories = $request->request->get('subcategory');
+            $parameters = $request->request->all();
 
             $article->setUser($this->getUser());
+            $article->setSubCategories($parameters['subcategory']);
             $article->setCategory($formData->getCategory());
             $article->setTitle($formData->getTitle());
             $article->setDescription($formData->getDescription());
@@ -60,18 +64,28 @@ class ArticleController extends AbstractController
         return $this->renderForm('article/new.html.twig', [
             'article' => $article,
             'form' => $form,
+            'subCategory' => [],
+            'category' => null
         ]);
     }
 
-    public function edit(Request $request, Article $article, EntityManagerInterface $entityManager): Response
+    public function edit(Request $request, Article $article, EntityManagerInterface $entityManager, CategoryRepository $categoryRepository): Response
     {
         $form = $this->createForm(ArticleType::class, $article);
         $form->handleRequest($request);
 
+        $subCategory = $article->getSubCategories($article);
+
+      //  $subCategories = $categoryRepository->findByCateogryIds($subCategory);
+
+
         if ($form->isSubmitted() && $form->isValid()) {
             $formData = $form->getData();
 
+            $parameters = $request->request->all();
+
             $article->setUser($this->getUser());
+            $article->setSubCategories($parameters['subcategory']);
             $article->setCategory($formData->getCategory());
             $article->setTitle($formData->getTitle());
             $article->setDescription($formData->getDescription());
@@ -87,6 +101,7 @@ class ArticleController extends AbstractController
         return $this->renderForm('article/edit.html.twig', [
             'category' => $article,
             'form' => $form,
+            'subCategory' => $subCategory
         ]);
     }
 
