@@ -22,19 +22,21 @@ class CategoryService
         return $this->entityManager->getRepository(Category::class)->findAll();
     }
 
-    private function getNestedCategory(Category $categoryId=null): array
+    private function getNestedCategory(Category $categoryId=null,$parentIds =[]): array
     {
         $result = [];
+        $parentIds[]= $categoryId->getId();
         $children = $this->categoryRepository->findByParentCategoryId($categoryId->getId());
         foreach ($children as $child) {
             $childData = [
                 'id' => $child->getId(),
                 'name' => $child->getName(),
+                'parent_ids'=>$parentIds
                 // Add other properties as needed
             ];
-            $nestedChildren = $this->getNestedCategory($child);
+            $nestedChildren = $this->getNestedCategory($child,$parentIds);
             if (!empty($nestedChildren)) {
-                $childData['children'] = $nestedChildren;
+                $childData['child'] = $nestedChildren;
             }
             $result[] = $childData;
         }

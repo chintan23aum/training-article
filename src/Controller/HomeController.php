@@ -30,10 +30,13 @@ class HomeController extends AbstractController
      */
     public function index(): Response
     {
-        return $this->render('article/index.html.twig', [
-            'categories' => $this->categoryService->getAllCategory(),
-            'articles' => $this->articleService->getAllArticle(),
-            'category_id' =>0,
+//        return $this->render('article/index.html.twig', [
+//            'categories' => $this->categoryService->getAllCategory(),
+//            'articles' => $this->articleService->getAllArticle(),
+//            'category_id' =>0,
+//        ]);
+        return $this->render('display/index.html.twig', [
+            'controller_name' => 'DisplayController',
         ]);
     }
 

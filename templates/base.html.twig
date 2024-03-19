@@ -21,11 +21,21 @@
 
         <script>
             var ajaxUrl = '{{ path('app_top_search') }}';
+            var advanceSearchURL = '{{ path('app_ajax_advance_search') }}';
         </script>
     </head>
     <body>
-        <div class="container-fluid mt-4" id="mainbody">
-            {% block body %}{% endblock %}
+
+        <div class="container-fluid mt-4">
+            <div class="col-12 row">
+                {{ include('layout/_leftmenu.html.twig') }}
+                <div class="col-8">
+                    {{ include('layout/_advance_search.html.twig') }}
+                    <div class="col-12 row" id="body_content">
+                        {% block body %}{% endblock %}
+                    </div>
+                </div>
+            </div>
         </div>
     </body>
 </html>

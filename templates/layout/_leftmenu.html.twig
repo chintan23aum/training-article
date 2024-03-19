@@ -1,0 +1,31 @@
+<!-- Sidebar -->
+<div class="col-3">
+    <section id="pmd-main">
+        <!-- Left sidebar -->
+        <aside id="basicSidebar" class="pmd-sidebar bg-light pmd-z-depth" role="navigation">
+            <ul class="nav flex-column pmd-sidebar-nav">
+                {% for menuItem in fullMenu() %}
+                        {% if menuItem.child is empty %}
+                            <li class="nav-item">
+                                <a class="nav-link active ajaxLoadArticle" href="{{ path('app_ajax_article',{'id':menuItem.main.id,'parentId':0}) }}">
+                                    <i class="material-icons pmd-list-icon pmd-sm"></i>
+                                    <span class="media-body">Stared</span>
+                                </a>
+                            </li>
+                        {%  else  %}
+                            <li class="nav-item">
+                                <a class="nav-link" data-toggle="collapse" href="#inbox{{ menuItem.main.id}}" role="button" aria-expanded="false" aria-controls="inbox{{ menuItem.main.id}}">
+                                    <i class="material-icons pmd-list-icon pmd-sm">{{ menuItem.main.name }}</i>
+                                </a>
+                                {{ leftMenuNested(menuItem.main.id, menuItem.child)|raw }}
+                            </li>
+                        {% endif %}
+                {% endfor %}
+            </ul>
+
+        </aside>
+        <div class="pmd-sidebar-overlay"></div>
+
+    </section>
+</div>
+<!-- Sidebar -->

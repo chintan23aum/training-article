@@ -1,5 +1,5 @@
 $(document).ready(function() {
-    console.log('hjere22');
+
     $("#top_search_button").on('click', function (e) {
         e.preventDefault();
         var value = $('#top_search').val();
@@ -17,6 +17,28 @@ $(document).ready(function() {
                 console.error(xhr.responseText);
             }
         });
+    });
+
+    //advance search
+    $("#top_advance_search_button").on('click', function (e) {
+        e.preventDefault();
+        $.ajax({
+            url: advanceSearchURL,
+            type: 'POST',
+            data: $("#advanceSearch").serialize(),
+            success: function (response) {
+                // Handle the response
+                console.log(response.html);
+                $("#body_content").html(response.html);
+            },
+            error: function (xhr, status, error) {
+                console.error(xhr.responseText);
+            }
+        });
+    });
+
+    $("#top_advance_search_reset").on('click', function (e) {
+        $('#advanceSearch')[0].reset();
     });
 
 
@@ -38,9 +60,32 @@ $(document).ready(function() {
         }
     });
 
+
+    //new display change to load article through ajax
+    $(document).off('ajaxLoadArticle');
+    $(document).on('click','.ajaxLoadArticle',function(e){
+        e.preventDefault();
+        var url = $(this).attr('href');
+        $('#advanceSearch')[0].reset();
+        getLoadArticle(url);
+    });
 });
 
-async function getCategoryById(parent_id,categoryId){
+function getLoadArticle(url){
+    $.ajax({
+        url: url,
+        type: 'POST',
+        success: function (response) {
+            console.log(response.html);
+            $("#body_content").html(response.html);
+        },
+        error: function (xhr, status, error) {
+            console.error(xhr.responseText);
+        }
+    });
+}
+
+function getCategoryById(parent_id,categoryId){
     var selected="";
     $.ajax({
         url: '/get-categories/' + parent_id,

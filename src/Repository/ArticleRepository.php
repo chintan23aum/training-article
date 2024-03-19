@@ -35,6 +35,74 @@ class ArticleRepository extends ServiceEntityRepository
             ->getResult();
     }
 
+    /*
+     * Advance Search
+     * */
+    public function findByAdvanceSearch($searchTerms): array
+    {
+
+        $queryBuilder =  $this->createQueryBuilder('a');
+
+            if($searchTerms['all']!=""){
+                $queryBuilder->andWhere('a.title LIKE :val')
+                    ->orWhere('a.tags LIKE :val')
+                    ->setParameter('val', '%' . $searchTerms['all'] . '%');
+            }
+
+            if($searchTerms['category']!=""){
+                $queryBuilder->andWhere('a.category = :category')
+                ->setParameter('category', $searchTerms['category']);
+            }
+
+            if($searchTerms['title']!=""){
+                $queryBuilder->andWhere('a.title LIKE :title')
+                ->setParameter('title', '%' . $searchTerms['title'] . '%');
+            }
+            if($searchTerms['tags']!=""){
+                $queryBuilder->andWhere('a.tags LIKE :tags')
+                    ->setParameter('tags', '%' . $searchTerms['tags'] . '%');
+            }
+        $articles = $queryBuilder-> orderBy('a.id', 'ASC')
+            ->getQuery()
+            ->getResult();
+
+            return $articles;
+    }
+
+    public function findByCategory($categoryId, $parentIds): array
+    {
+
+        $result = $this->createQueryBuilder('a')
+            ->andWhere('a.category = :category_id')
+            ->orWhere('a.sub_categories LIKE :val')
+            ->setParameter('category_id', $categoryId)
+            ->setParameter('val', '%"' . $categoryId . '"%')
+            ->orderBy('a.id', 'ASC')
+            ->getQuery()
+            ->getResult();
+
+        $parentIds[]= $categoryId;
+        $matchingEntities = array_filter($result, function ($article) use ($parentIds) {
+            if($article->getSubCategories()==null){
+                return $article;
+            }
+
+            $allids = $article->getSubCategories();
+            $allids[] = $article->getCategory()->getId();
+
+            foreach($parentIds as $id){
+                if(!in_array($id, $allids)){
+                    return false;
+                }
+            }
+            return $article;
+
+            //return in_array($tmp, $article->getParentCategory(), true);
+        });
+        return $matchingEntities;
+
+    }
+
 //    /**
 //     * @return Article[] Returns an array of Article objects
 //     */

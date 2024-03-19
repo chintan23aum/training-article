@@ -1,0 +1,26 @@
+<div class="mt-4 col-12 row">
+    {%  if articles is empty %}
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body">
+                   <p>No Article Found</p>
+                </div>
+            </div>
+        </div>
+    {% else %}
+        <div class="col-12"><small class="float-right">total {{ totalCount }} articles found</small></div>
+        {% for article in articles %}
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ article.title }}</h5>
+                        <p class="card-text"><small>{{ article.tags }}</small>
+                            {{ article.description|raw }}..
+                        </p>
+                        <a href="{{ path('app_article_display',{'id': article.id}) }}" class="btn btn-primary">Read More</a>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    {% endif %}
+</div>

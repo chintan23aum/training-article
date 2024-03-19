@@ -1,0 +1,39 @@
+<form class="form-inline" id="advanceSearch">
+    <div class="col-8">
+        <input class="form-control mr-sm-2" type="search" placeholder="Search all" aria-label="Search" id="top_search" name="search[all]">
+
+    </div>
+    <div class="col-4">
+        <button class="btn btn-outline-success my-3 my-sm-0" type="button" id="top_advance_search_button">Search</button>
+        <button class="btn btn-outline-success my-2 my-sm-0" type="button" id="top_advance_search_reset">Reset</button>
+        <a class="btn" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
+            Advance Search
+        </a>
+    </div>
+    <div class="col-12  collapse" id="collapseExample">
+        <div class="card card-body col-12 row">
+            <div class="form-row align-items-center">
+                <div class="col-sm-3 my-1">
+                    <label class="sr-only" for="searchcategory">Category</label>
+                    <select name="search[category]" class="form-control" placeholder="Search Category">
+                        <option value="">Select Category</option>
+                        {% set allcategory = getAllCategory() %}
+                        {% if allcategory is not empty %}
+                            {% for category in allcategory %}
+                                <option value="{{ category.id }}">{{ category.name }}</option>
+                            {% endfor %}
+                        {% endif %}
+                    </select>
+                </div>
+                <div class="col-sm-3 my-1">
+                    <label class="sr-only" for="searchtitle">Title</label>
+                    <input type="text" class="form-control" id="searchtitle" placeholder="Search Title" name="search[title]">
+                </div>
+                <div class="col-sm-3 my-1">
+                    <label class="sr-only" for="searchtags">Name</label>
+                    <input type="text" class="form-control" id="searchtags" placeholder="Search Tags" name="search[tags]">
+                </div>
+            </div>
+        </div>
+    </div>
+</form>

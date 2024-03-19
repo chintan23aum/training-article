@@ -2,9 +2,9 @@ controllers:
     resource: ../src/Controller/
     type: attribute
 
-app_home:
-    path: '/'
-    controller: App\Controller\HomeController::index
+#app_home:
+#    path: '/'
+#    controller: App\Controller\HomeController::index
 
 app_login:
     path: '/login'
@@ -127,6 +127,31 @@ app_article_like:
 app_top_search:
     path: /topsearch
     controller: App\Controller\HomeController::topsearch
+    methods: POST
+
+
+#display routes
+app_home:
+    path: '/'
+    controller: App\Controller\HomeController::index
+
+app_display:
+    path: /display
+    controller: App\Controller\DisplayController::index
+
+app_display_article:
+    path: /display/{id}
+    controller: App\Controller\DisplayController::index
+    methods: GET|POST
+
+app_ajax_article:
+    path: /listarticle/{id}
+    controller: App\Controller\DisplayController::ajaxlist
+    methods: GET|POST
+
+app_ajax_advance_search:
+    path: /advancesearch
+    controller: App\Controller\DisplayController::advanceSearch
     methods: POST
 
 #article: 
