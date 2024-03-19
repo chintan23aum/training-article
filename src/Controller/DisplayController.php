@@ -25,22 +25,22 @@ class DisplayController extends AbstractController
         $this->articleService = $articleService;
     }
 
-    public function index(CategoryService $categoryService): Response
+    public function index(Category $category = null): Response
     {
 
         return $this->render('display/index.html.twig', [
-            'controller_name' => 'DisplayController',
+            'category_id' => $category!=null ?$category->getId():0,
         ]);
     }
 
-    public function ajaxlist(Category $category_id = null,Request $request): Response
+    public function ajaxlist(Category $category = null,Request $request): Response
     {
         $categoryId= 0;
-        if($category_id==null){
+        if($category==null){
             $articles = $this->articleService->getAllArticle();
         } else {
-            $articles = $this->articleRepository->findByCategory($category_id->getId(), json_decode($request->get('parentIds'), true));
-            $categoryId =$category_id->getId();
+            $articles = $this->articleRepository->findByCategory($category->getId(), json_decode($request->get('parentIds'), true));
+            $categoryId =$category->getId();
         }
 
         $data = ['message' => 'AJAX request received!',
@@ -56,14 +56,13 @@ class DisplayController extends AbstractController
 
     public function advanceSearch(Request $request): Response
     {
-        $categoryId= 0;
         $articles = $this->articleRepository->findByAdvanceSearch($request->get('search'));
 
         $data = ['message' => 'AJAX request received!',
             'html'=> $this->renderView('display/ajax_list.html.twig',[
                 'categories' => $this->categoryService->getAllCategory(),
                 'articles' => $articles,
-                'category_id' => $categoryId,
+                'category_id' => 0,
                 'totalCount' => count($articles),
             ])
         ];

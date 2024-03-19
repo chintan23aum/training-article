@@ -17,6 +17,7 @@
                                 <a class="nav-link" data-toggle="collapse" href="#inbox{{ menuItem.main.id}}" role="button" aria-expanded="false" aria-controls="inbox{{ menuItem.main.id}}">
                                     <i class="material-icons pmd-list-icon pmd-sm">{{ menuItem.main.name }}</i>
                                 </a>
+{#                                <a class="ajaxLoadArticle" href="{{ path('app_ajax_article',{'id':menuItem.main.id,'parentId':0}) }}" ><i class="bi bi-arrow-right">-></i></a>#}
                                 {{ leftMenuNested(menuItem.main.id, menuItem.child)|raw }}
                             </li>
                         {% endif %}

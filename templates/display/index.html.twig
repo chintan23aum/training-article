@@ -6,7 +6,7 @@
 
     <script>
         $(document).ready(function (){
-            var url = "{{ path('app_ajax_article',{'id':0}) }}"
+            var url = "{{ path('app_ajax_article',{'id':category_id}) }}"
             getLoadArticle(url);
         });
     </script>

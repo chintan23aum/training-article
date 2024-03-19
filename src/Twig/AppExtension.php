@@ -55,14 +55,12 @@ class AppExtension extends AbstractExtension
         foreach($menu as $childRow) {
             $html .= '<ul class="collapse" id="inbox'.$category_id.'">';
             if(empty($childRow['child'])){
-                $html .='<li class="nav-item">
-<a class="nav-link ajaxLoadArticle" href="'.$this->router->generate('app_ajax_article',['id'=>$childRow['id'],'parentIds'=>json_encode($childRow['parent_ids'])]).'">
-<span class="media-body">'.$childRow['name'].'</span>
-</a>';
+                $html .='<li class="nav-item"><a class="nav-link ajaxLoadArticle" href="'.$this->router->generate('app_ajax_article',['id'=>$childRow['id'],'parentIds'=>json_encode($childRow['parent_ids'])]).'"><span class="media-body">'.$childRow['name'].'</span></a>';
             } else {
                 $html .='<li class="nav-item">';
                 $html .='<a class="nav-link" data-toggle="collapse" href="#inbox'.$childRow['id'].'" role="button" aria-expanded="false" aria-controls="inbox'.$childRow['id'].'">';
                 $html .='<i class="material-icons pmd-list-icon pmd-sm">'.$childRow['name'].'</i></a>';
+              //  $html .='<a class="ajaxLoadArticle" href="'.$this->router->generate('app_ajax_article',['id'=>$childRow['id'],'parentIds'=>json_encode($childRow['parent_ids'])]).'" ><i class="bi bi-arrow-right">-></i></a>';
                 $html.= $this->leftMenuNested($childRow['id'],$childRow['child']);
             }
             $html.='</ul>';
