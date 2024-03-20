@@ -109,10 +109,6 @@ app_article_delete:
     controller: App\Controller\ArticleController::delete
     methods: POST
 
-app_home_articlelist:
-    path: /articlelist/{id}
-    controller: App\Controller\HomeController::showarticlelist
-    methods: GET
 
 app_article_display:
     path: /article/{id}
@@ -124,16 +120,11 @@ app_article_like:
     controller: App\Controller\ArticleController::likearticle
     methods: GET|POST
 
-app_top_search:
-    path: /topsearch
-    controller: App\Controller\HomeController::topsearch
-    methods: POST
-
 
 #display routes
 app_home:
     path: '/'
-    controller: App\Controller\HomeController::index
+    controller: App\Controller\DisplayController::index
 
 app_display:
     path: /display
@@ -153,16 +144,3 @@ app_ajax_advance_search:
     path: /advancesearch
     controller: App\Controller\DisplayController::advanceSearch
     methods: POST
-
-#article: 
-#    prefix: '/article'
-#    controller: App\Controller\ArticleController\  
-
-#    app_article:
-#        path: '/article'
-#        controller: ArticleController::index
-    
-    # Define user-specific routes here
-#    admin_crud:
-#        path: '/admin/article'
-#        controller: ArticleController::list

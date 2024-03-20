@@ -21,16 +21,6 @@ class ArticleService
         return $this->entityManager->getRepository(Article::class)->findAll();
     }
 
-    public function getArticleByCategory(int $category_id)
-    {
-        return $this->entityManager->getRepository(Article::class)->findBy(['category' => $category_id]);
-    }
-
-    public function getArticleDetail(int $id)
-    {
-        return $this->entityManager->getRepository(Article::class)->findBy(['id' => $id]);
-    }
-
     public function getArticleLikes(int $id)
     {
         $totalrow= $this->entityManager->getRepository(ArticleLog::class)->findBy(['article' => $id]);

@@ -33,16 +33,11 @@ class CategoryRepository extends ServiceEntityRepository
 
     public function findByParentCategoryId(int $categoryId): array
     {
-        // Fetch all entities
         $entities = $this->findAll();
-
-        // Filter entities based on the category ID
         $matchingEntities = array_filter($entities, function ($entity) use ($categoryId) {
-            // Check if parentCategory is null
             if ($entity->getParentCategory() === null) {
                 return false;
             }
-            // Check if the category ID is in the parentCategory array
             return in_array($categoryId, $entity->getParentCategory(), true);
         });
 
@@ -57,30 +52,4 @@ class CategoryRepository extends ServiceEntityRepository
             ->getResult();
     }
 
-
-
-//    /**
-//     * @return Category[] Returns an array of Category objects
-//     */
-//    public function findByExampleField($value): array
-//    {
-//        return $this->createQueryBuilder('c')
-//            ->andWhere('c.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->orderBy('c.id', 'ASC')
-//            ->setMaxResults(10)
-//            ->getQuery()
-//            ->getResult()
-//        ;
-//    }
-
-//    public function findOneBySomeField($value): ?Category
-//    {
-//        return $this->createQueryBuilder('c')
-//            ->andWhere('c.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->getQuery()
-//            ->getOneOrNullResult()
-//        ;
-//    }
 }

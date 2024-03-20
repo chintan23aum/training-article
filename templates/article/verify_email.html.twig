@@ -3,23 +3,12 @@
 {% block title %}Hello HomeController!{% endblock %}
 
 {% block body %}
-    <style>
-        .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-        .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-    </style>
-
-    <div >
-        <h1>Welcome</h1>
-
-        <div class="example-wrapper">
-            {{ include('article/_search_form.html.twig') }}
-            <div class="my-5"  id="articleDisplay" >
-                {{ include('article/_tabs.html.twig') }}
+    <div class="mt-4 col-12 row">
+        <div class="mt-5 col-12"  id="articleDisplay" >
 
                 <div class="mt-4">
                     <p class="alert-danger">Please verify your email to continue</p>
                 </div>
             </div>
         </div>
-    </div>
 {% endblock %}

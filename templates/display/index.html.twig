@@ -5,7 +5,7 @@
 {% block body %}
 
     <script>
-        $(document).ready(function (){
+        $(window).ready(function (){
             var url = "{{ path('app_ajax_article',{'id':category_id}) }}"
             getLoadArticle(url);
         });

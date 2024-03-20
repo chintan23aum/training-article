@@ -22,20 +22,6 @@ class ArticleRepository extends ServiceEntityRepository
     }
 
     /*
-     * Top Search
-     * */
-    public function findBySearchTerm($searchTerm): array
-    {
-        return $this->createQueryBuilder('a')
-            ->andWhere('a.title LIKE :val')
-            ->orWhere('a.tags LIKE :val')
-            ->setParameter('val', '%' . $searchTerm . '%')
-            ->orderBy('a.id', 'ASC')
-            ->getQuery()
-            ->getResult();
-    }
-
-    /*
      * Advance Search
      * */
     public function findByAdvanceSearch($searchTerms): array
@@ -43,25 +29,25 @@ class ArticleRepository extends ServiceEntityRepository
 
         $queryBuilder =  $this->createQueryBuilder('a');
 
-            if($searchTerms['all']!=""){
-                $queryBuilder->andWhere('a.title LIKE :val')
-                    ->orWhere('a.tags LIKE :val')
-                    ->setParameter('val', '%' . $searchTerms['all'] . '%');
-            }
+        if($searchTerms['all']!=""){
+            $queryBuilder->andWhere('a.title LIKE :val')
+                ->orWhere('a.tags LIKE :val')
+                ->setParameter('val', '%' . $searchTerms['all'] . '%');
+        }
 
-            if($searchTerms['category']!=""){
-                $queryBuilder->andWhere('a.category = :category')
-                ->setParameter('category', $searchTerms['category']);
-            }
+        if($searchTerms['category']!=""){
+            $queryBuilder->andWhere('a.category = :category')
+            ->setParameter('category', $searchTerms['category']);
+        }
 
-            if($searchTerms['title']!=""){
-                $queryBuilder->andWhere('a.title LIKE :title')
-                ->setParameter('title', '%' . $searchTerms['title'] . '%');
-            }
-            if($searchTerms['tags']!=""){
-                $queryBuilder->andWhere('a.tags LIKE :tags')
-                    ->setParameter('tags', '%' . $searchTerms['tags'] . '%');
-            }
+        if($searchTerms['title']!=""){
+            $queryBuilder->andWhere('a.title LIKE :title')
+            ->setParameter('title', '%' . $searchTerms['title'] . '%');
+        }
+        if($searchTerms['tags']!=""){
+            $queryBuilder->andWhere('a.tags LIKE :tags')
+                ->setParameter('tags', '%' . $searchTerms['tags'] . '%');
+        }
         $articles = $queryBuilder-> orderBy('a.id', 'ASC')
             ->getQuery()
             ->getResult();
@@ -97,34 +83,9 @@ class ArticleRepository extends ServiceEntityRepository
             }
             return $article;
 
-            //return in_array($tmp, $article->getParentCategory(), true);
         });
         return $matchingEntities;
 
     }
 
-//    /**
-//     * @return Article[] Returns an array of Article objects
-//     */
-//    public function findByExampleField($value): array
-//    {
-//        return $this->createQueryBuilder('a')
-//            ->andWhere('a.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->orderBy('a.id', 'ASC')
-//            ->setMaxResults(10)
-//            ->getQuery()
-//            ->getResult()
-//        ;
-//    }
-
-//    public function findOneBySomeField($value): ?Article
-//    {
-//        return $this->createQueryBuilder('a')
-//            ->andWhere('a.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->getQuery()
-//            ->getOneOrNullResult()
-//        ;
-//    }
 }

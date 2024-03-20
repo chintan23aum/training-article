@@ -143,10 +143,8 @@ class ArticleController extends AbstractController
 
         $totalLike = $articleLogRepository->findOneByUser($article,$this->getUser());
 
-
         if($totalLike[1] <= 0){
             //insert new record
-            $totallike=1;
 
             $articlelog = new ArticleLog();
             $articlelog->setUser($this->getUser());
